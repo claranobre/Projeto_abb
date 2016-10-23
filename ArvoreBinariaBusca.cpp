@@ -91,6 +91,13 @@ void emOrdem(struct node *ponteiro) {
     }
 }
 
+void enesimoElemento(int n){} 
+int posicao(int x){}
+float mediana(){}
+boolean ehCheia(){}
+boolean ehCompleta(){}
+String toString(){}
+
 /*
 * Main()
 */
