@@ -1,105 +1,112 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
+#include <string.h>
+#include <malloc.h>
+#include <iostream> 
 
-class ArvoreBinariaBusca{
+#define TAM 10
 
-	ArvoreBinariaBusca *esquerda, *direita;
-	ArvoreBinariaBusca raiz;
-	int contador;
-	char chave;
+using namespace std;
 
-	/*
-	* Método construtor da classe
-	*/
-	ArvoreBinariaBusca();
+//typedef struct  node *ArvoreBinariaBusca;
 
-	/*
-	* Método destrutor da classe
-	*/
-	~ArvoreBinariaBusca();
+struct node {
+	char valores[TAM];
+	struct node *direita;
+	struct node *esquerda;
+};
 
-	//Função de inserção de um elemento
-	void Insercao(int x);
-	//Função de remoção de um elemento
-	void Remocao(int x);
-	//Função de busca de um elemento
-	void Busca(int x);
+	struct node *raiz; //Ponteiro da raiz
+	struct node *alocar; //Ponteiro para fazer operação de alocação
 
-	//Árvore binária criada e iniciada como vazia
-	ArvoreBinariaBusca::ArvoreBinariaBusca(){
-		raiz = NULL;
-		contador = 0;
-	}
+/*
+* Buscar
+*/
+struct node *buscar(char *valores){
+	struct node *ponteiro;
+	ponteiro = raiz;
 
-	//Árvore binária é destruída liberando espaço ocupado pelos seus elementos
-	ArvoreBinariaBusca::~ArvoreBinariaBusca(ArvoreBinariaBusca *&raiz){
-		if(raiz != NULL){
-			~ArvoreBinariaBusca(raiz->esquerda);
-			~ArvoreBinariaBusca(raiz->direita);
-			free(raiz);
-			raiz = NULL;
+	while(ponteiro){
+		if(strcmp(valores, ponteiro->valores) == 0){ //Comparação
+			return ponteiro;
 		}
-		//Clear();
-	}
-
-	//Função retorna 'true' se a árvore binária estiver vazia e 'false' caso contrário
-	bool ArvoreBinariaBusca::Vazia(){
-		return(bool == NULL);
-	}
-
-	//Função retorna 'true' se a árvore binária estiver cheia e 'false' caso contrário
-	bool ArvoreBinariaBusca::Cheia(){
-		return false;
-	}
-
-	//Função para verificar o tamanho da árvore de busca
-	int ArvoreBinariaBusca::Tamanho(){
-		return contador;
-	}
-
-	//Função de inserção de um novo nó no lugar de uma subárvore vazia
-	ArvoreBinariaBusca::Insercao(char key, int x, ArvoreBinariaBusca *&raiz){
-		if(raiz == NULL){
-			if((raiz=(ArvoreBinariaBusca *) malloc(sizeof(ArvoreBinariaBusca))) == NULL){
-				return false;
-			}else{
-				raiz -> x = chave;
-				raiz -> esquerda = raiz -> direita = NULL;
-				contador++;
-				return true;
-			}
-		else{
-			if(chave < raiz -> x){
-				return ArvoreBinariaBusca::Insercao(chave,raiz->direita);
-			}else{
-				return false; //chave já existe na árvore
-			}
+		if(strcmp(valores, ponteiro->valores) > 0){
+			ponteiro = ponteiro -> direita;
+		}else{
+			ponteiro = ponteiro -> esquerda;
 		}
-	}
-
-	//Função para percorrer a árvore binária de busca em Ordem
-	ArvoreBinariaBusca::PercorrerEmOrdem(ArvoreBinariaBusca *&raiz){
-		if(raiz != NULL){
-			ArvoreBinariaBusca::PercorrerEmOrdem(raiz -> esquerda);
-			printf("%s\n", raiz->x);
-			ArvoreBinariaBusca::PercorrerEmOrdem(raiz -> direita);
-		}
+		return NULL;
 	}
 }
 
+/*
+* Inserção
+*/
+void inserir(char *valores){
+	alocar = (struct node *) malloc(sizeof(struct node)); //Alocação de memória
+
+	if(!alocar){
+		cout<<"Erro. Falta memória.";
+	}
+	strcpy(alocar->valores,valores);
+
+	if(!raiz){ //Se não existir elementos na árvore inserir valor na raiz
+		raiz = alocar;
+	}else{
+		//buscar
+		struct node *ponteiro;
+		struct node *ponteiroAnterior;
+
+		ponteiro = raiz;
+		ponteiroAnterior = NULL;
+
+		while(ponteiro){ //Busca para verificar onde será inserido o nó
+			ponteiroAnterior = ponteiro;
+
+			if(strcmp(valores, ponteiro->valores) == 0){
+				cout<<"Valor já existe.\n";
+				return;
+			}
+			if(strcmp(valores, ponteiro->valores) > 0){
+				ponteiro = ponteiro -> direita;
+			}else{
+				ponteiro = ponteiro -> esquerda;
+			}
+		}
+	if(strcmp(valores, ponteiroAnterior->valores) > 0){
+		ponteiroAnterior->direita = alocar;   //Atribui o endereço de alocação ao ponteiro da direita do nó anterior
+	}else{
+		ponteiroAnterior -> esquerda = alocar; //Atribui o endereço de alocação ao ponteiro da esquerda do nó anterior
+	}	
+	}
+}
+
+/*
+* Em Ordem
+*/
+void emOrdem(struct node *ponteiro) {
+    if (ponteiro) {
+    	emOrdem(ponteiro->esquerda);
+        cout<< ponteiro->valores << "\n";
+        emOrdem(ponteiro->direita);
+    }
+}
+
+/*
+* Main()
+*/
 int main(){
-	char chave, opcao;
+	char valores[TAM];
 
-	ArvoreBinariaBusca();
+	cout << "Insira valores: \n";
+	for(int i = 0; i < TAM; i++){
+	cin >> valores;
+	inserir(valores);
+	}
+	emOrdem(raiz);
+	cout <<"Buscar valor: \n";
+	cin >> valores;
+	cout << buscar(valores);
+	//cout<<"Imprimir Árvore Binária de Busca: \n");
 
-	do{
-		printf("Informe a chave: \n");
-		cin(chave);
-
-		ArvoreBinariaBusca::Insercao(chave, raiz);
-
-		cout::"Mais dados?"::endl;
-		cin(opcao);
-	}while(toupper(opcao) != 'N');
+	return 0;
 }
