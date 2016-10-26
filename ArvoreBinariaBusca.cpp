@@ -107,7 +107,21 @@ void enesimoElemento(node *raiz, int n, int limite, node *NodeEncontrado){
 		}
 	}
 } 
-int posicao(int x){}
+/*
+* Retorna a posição ocupada pelo elemento 'x'
+*/
+int posicao(int x){
+	if(raiz == NULL){
+		return NULL;
+	}
+	if(node->alocar == x){
+		return x[i];
+		posicao(node->esquerda, x);
+	}else{
+		posicao(node->direita, x);
+		return node;
+	}
+}
 float mediana(){}
 boolean ehCheia(){}
 boolean ehCompleta(){}
