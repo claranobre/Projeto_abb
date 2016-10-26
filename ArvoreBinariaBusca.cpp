@@ -90,8 +90,23 @@ void emOrdem(struct node *ponteiro) {
         emOrdem(ponteiro->direita);
     }
 }
-
-void enesimoElemento(int n){} 
+/*
+* Retorna o n-ésimo elemento no percurso em ordem
+*/
+void enesimoElemento(node *raiz, int n, int limite, node *NodeEncontrado){
+	if(raiz->esquerda){
+		enesimoElemento(raiz->esquerda, n, limite, NodeEncontrado);
+	}
+	if(!NodeEncontrado){
+		if((n)++ == limite){
+			NodeEncontrado = raiz;
+			return;
+		}
+		if(raiz->direita){
+			enesimoElemento(raiz->direita, n, limite, NodeEncontrado);
+		}
+	}
+} 
 int posicao(int x){}
 float mediana(){}
 boolean ehCheia(){}
@@ -106,8 +121,8 @@ int main(){
 
 	cout << "Insira valores: \n";
 	for(int i = 0; i < TAM; i++){
-	cin >> valores;
-	inserir(valores);
+		cin >> valores;
+		inserir(valores);
 	}
 	emOrdem(raiz);
 	cout <<"Buscar valor: \n";
