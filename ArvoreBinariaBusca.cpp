@@ -93,39 +93,39 @@ void emOrdem(struct node *ponteiro) {
 /*
 * Retorna o n-ésimo elemento no percurso em ordem
 */
-void enesimoElemento(node *raiz, int n, int limite, node *NodeEncontrado){
+void enesimoElemento(node *raiz, int n, int elementos, node *NodeEncontrado){
 	if(raiz->esquerda){
-		enesimoElemento(raiz->esquerda, n, limite, NodeEncontrado);
+		enesimoElemento(raiz->esquerda, n, elementos, NodeEncontrado);
 	}
 	if(!NodeEncontrado){
-		if((n)++ == limite){
+		if((n)++ == elementos){
 			NodeEncontrado = raiz;
 			return;
 		}
 		if(raiz->direita){
-			enesimoElemento(raiz->direita, n, limite, NodeEncontrado);
+			enesimoElemento(raiz->direita, n, elementos, NodeEncontrado);
 		}
 	}
 } 
 /*
 * Retorna a posição ocupada pelo elemento 'x'
 */
-int posicao(int x){
+int posicao(node *ponteiro, int x){
 	if(raiz == NULL){
-		return NULL;
+		cout << "Árvore vazia \n";
 	}
-	if(node->alocar == x){
-		return x[i];
-		posicao(node->esquerda, x);
+	if((ponteiro -> valores) == x){
+		cout << x;
+		posicao(ponteiro->esquerda, x);
 	}else{
-		posicao(node->direita, x);
-		return node;
+		posicao(ponteiro->direita, x);
+		cout << ponteiro;
 	}
 }
-float mediana(){}
+/*float mediana(){}
 boolean ehCheia(){}
 boolean ehCompleta(){}
-String toString(){}
+String toString(){}*/
 
 /*
 * Main()
